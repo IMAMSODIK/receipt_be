@@ -19,7 +19,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/data-box/update', [BoxController::class, 'update']);
     Route::post('/data-box/delete', [BoxController::class, 'delete']);
 
-    Route::post('/payment/snap', [PaymentController::class, 'createSnap']);
+    // Route::post('/payment/snap', [PaymentController::class, 'createSnap']);
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
