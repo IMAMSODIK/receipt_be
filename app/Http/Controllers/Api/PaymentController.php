@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Midtrans\Snap;
 use Midtrans\Config;
@@ -10,23 +11,31 @@ use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
-    public function createSnap(Request $request)
+    public function snap(Request $request)
     {
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = config('midtrans.is_sanitized');
-        Config::$is3ds = config('midtrans.is_3ds');
-
         $orderId = 'ORDER-' . Str::uuid();
+
+        Transaction::create([
+            'order_id' => $orderId,
+            'amount'   => $request->amount,
+            'status'   => 'pending',
+            'name'     => $request->name,
+            'email'    => $request->email,
+        ]);
+
+        Config::$serverKey = config('services.midtrans.server_key');
+        Config::$isProduction = false;
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
 
         $params = [
             'transaction_details' => [
-                'order_id' => $orderId,
+                'order_id'     => $orderId,
                 'gross_amount' => $request->amount,
             ],
             'customer_details' => [
                 'first_name' => $request->name,
-                'email' => $request->email,
+                'email'      => $request->email,
             ],
         ];
 
@@ -34,8 +43,7 @@ class PaymentController extends Controller
 
         return response()->json([
             'snap_token' => $snapToken,
-            'order_id' => $orderId,
+            'order_id'   => $orderId,
         ]);
     }
 }
-
