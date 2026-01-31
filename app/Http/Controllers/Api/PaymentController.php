@@ -23,10 +23,10 @@ class PaymentController extends Controller
             'email'    => $request->email,
         ]);
 
-        Config::$serverKey = config('services.midtrans.server_key');
-        Config::$isProduction = false;
-        Config::$isSanitized = true;
-        Config::$is3ds = true;
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+        Config::$isSanitized = config('midtrans.is_sanitized');
+        Config::$is3ds = config('midtrans.is_3ds');
 
         $params = [
             'transaction_details' => [
