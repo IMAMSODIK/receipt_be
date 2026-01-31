@@ -25,3 +25,8 @@ Route::get('/transactions/{orderId}/status', function ($orderId) {
         'status' => $trx->status
     ]);
 });
+
+Route::get('/ping', function () {
+    return response()->json(['pong' => true]);
+});
+
