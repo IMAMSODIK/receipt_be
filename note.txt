@@ -1,0 +1,4 @@
+box
+- id
+- nama
+- status
