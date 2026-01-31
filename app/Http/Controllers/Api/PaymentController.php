@@ -28,7 +28,6 @@ class PaymentController extends Controller
                 'first_name' => $request->name,
                 'email' => $request->email,
             ],
-            'enabled_payments' => ['qris'],
         ];
 
         $snapToken = Snap::getSnapToken($params);
