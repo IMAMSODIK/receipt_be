@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\MidtransController;
 use App\Models\Transaction;
 
@@ -26,7 +27,10 @@ Route::get('/transactions/{orderId}/status', function ($orderId) {
     ]);
 });
 
-Route::get('/ping', function () {
-    return response()->json(['pong' => true]);
+Route::post('/login', [AuthApiController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthApiController::class, 'logout']);
+    Route::get('/me', [AuthApiController::class, 'me']);
 });
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('boxes', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('user_id')->nullable();
             $table->string('name')->unique();
             $table->boolean('status')->default(false);
             $table->timestamps();
