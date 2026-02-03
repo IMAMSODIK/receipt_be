@@ -58,6 +58,13 @@
                     </a>
                 </li>
 
+                <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="/transaksi">
+                        <i class="fa fa-archive text-white"></i>
+                        <span class="">Transaksi</span>
+                    </a>
+                </li>
+
             </ul>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
         </div>

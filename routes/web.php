@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoxController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,7 +20,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/data-box/update', [BoxController::class, 'update']);
     Route::post('/data-box/delete', [BoxController::class, 'delete']);
 
-    // Route::post('/payment/snap', [PaymentController::class, 'createSnap']);
+    Route::get('/transaksi', [TransactionController::class, 'index']);
+    // Route::get('/transaksi/edit', [BoxController::class, 'edit']);
+    // Route::post('/transaksi/store', [BoxController::class, 'store']);
+    // Route::post('/transaksi/update', [BoxController::class, 'update']);
+    // Route::post('/transaksi/delete', [BoxController::class, 'delete']);
+
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
