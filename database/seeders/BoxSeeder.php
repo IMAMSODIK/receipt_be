@@ -23,14 +23,12 @@ class BoxSeeder extends Seeder
         ]);
 
         Box::create([
-            'user_id' => User::first()->id,
             'name' => 'Box Temu Cafe',
             'status' => 1,
             'pin' => Hash::make('123456')
         ]);
 
         Box::create([
-            'user_id' => User::first()->id,
             'name' => 'Box Monochorome',
             'status' => 0,
             'pin' => Hash::make('123456')
