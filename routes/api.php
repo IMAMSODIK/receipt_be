@@ -16,7 +16,7 @@ use App\Models\Transaction;
 |--------------------------------------------------------------------------
 */
 
-Route::post('/payment/snap', [PaymentController::class, 'snap']);
+Route::middleware('auth:sanctum')->post('/payment/snap', [PaymentController::class, 'snap']);
 
 Route::post('/midtrans/webhook', [MidtransController::class, 'handle']);
 Route::get('/transactions/{orderId}/status', function ($orderId) {

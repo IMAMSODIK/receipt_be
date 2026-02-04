@@ -13,37 +13,42 @@ class PaymentController extends Controller
 {
     public function snap(Request $request)
     {
-        $orderId = 'ORDER-' . Str::uuid();
+        $user = $request->user();
+        $box = $user->box;
 
-        Transaction::create([
+        if (!$box) {
+            return response()->json(['message' => 'Box not found'], 404);
+        }
+
+        $orderId = 'ORD-' . Str::uuid();
+
+        $trx = Transaction::create([
+            'id' => Str::uuid(),
             'order_id' => $orderId,
-            'amount'   => $request->amount,
-            'status'   => 'pending',
-            'name'     => $request->name,
-            'email'    => $request->email,
+            'box_id' => $box->id,
+            'amount' => $request->amount,
+            'status' => 'pending',
         ]);
 
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = config('midtrans.is_sanitized');
-        Config::$is3ds = config('midtrans.is_3ds');
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        \Midtrans\Config::$isProduction = false;
 
         $params = [
             'transaction_details' => [
-                'order_id'     => $orderId,
+                'order_id' => $orderId,
                 'gross_amount' => $request->amount,
             ],
             'customer_details' => [
-                'first_name' => $request->name,
-                'email'      => $request->email,
+                'first_name' => $user->name,
+                'email' => $user->email,
             ],
         ];
 
-        $snapToken = Snap::getSnapToken($params);
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
 
         return response()->json([
             'snap_token' => $snapToken,
-            'order_id'   => $orderId,
+            'order_id' => $orderId
         ]);
     }
 }
