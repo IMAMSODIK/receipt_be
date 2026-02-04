@@ -6,6 +6,7 @@ use App\Models\Box;
 use App\Http\Requests\StoreBoxRequest;
 use App\Http\Requests\UpdateBoxRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class BoxController extends Controller
 {
@@ -23,11 +24,13 @@ class BoxController extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required|unique:boxes,name'
+                'name' => 'required|unique:boxes,name',
+                'pin' => 'required'
             ]);
 
             Box::create([
-                'name' => $request->name
+                'name' => $request->name,
+                'pin' => $request->pin
             ]);
 
             return response()->json([
@@ -62,12 +65,14 @@ class BoxController extends Controller
         $id = $request->id;
         try {
             $request->validate([
-                'name' => "required|unique:boxes,name,$id"
+                'name' => "required|unique:boxes,name,$id",
+                'pin' => "required"
             ]);
 
             $box = Box::findOrFail($id);
             $box->update([
-                'name' => $request->name
+                'name' => $request->name,
+                'pin' => $request->pin
             ]);
 
             return response()->json([
@@ -98,5 +103,32 @@ class BoxController extends Controller
                 'message' => 'Data tidak ditemukan'
             ], 404);
         }
+    }
+
+    public function verifyPin(Request $request)
+    {
+        $request->validate([
+            'pin' => 'required|string|size:6',
+        ]);
+
+        $user = $request->user();
+        $box = Box::where('user_id', $user->id)->first();
+
+        if (!$box) {
+            return response()->json([
+                'valid' => false,
+                'message' => 'Box not found'
+            ], 404);
+        }
+
+        if (!Hash::check($request->pin, $box->pin)) {
+            return response()->json([
+                'valid' => false
+            ]);
+        }
+
+        return response()->json([
+            'valid' => true
+        ]);
     }
 }

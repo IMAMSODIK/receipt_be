@@ -94,6 +94,13 @@
                     </div>
                 </div>
 
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="pin" class="form-label">Pin Box</label>
+                        <input type="text" class="form-control" id="pin" placeholder="Contoh: 101">
+                    </div>
+                </div>
+
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                     <button class="btn btn-primary" id="store">Simpan</button>
@@ -119,6 +126,11 @@
                         <label class="form-label">Nama Box</label>
                         <input type="text" id="edit_name" class="form-control">
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Pin Box</label>
+                        <input type="text" id="edit_pin" class="form-control">
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -143,13 +155,15 @@
             $('#store').on('click', function() {
 
                 let name = $('#name').val();
+                let pin = $('#pin').val();
 
                 $.ajax({
                     url: "/data-box/store",
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
-                        name: name
+                        name: name,
+                        pin: pin
                     },
 
                     success: function(response) {
@@ -161,6 +175,7 @@
 
                         $('#modalTambahKamar').modal('hide');
                         $('#name').val("");
+                        $('#pin').val("");
 
                         setTimeout(() => {
                             location.reload();
@@ -191,6 +206,7 @@
 
                         $('#edit_id').val(res.id);
                         $('#edit_name').val(res.name);
+                        $('#edit_pin').val(res.pin);
 
                         $('#modalEditKamar').modal('show');
                     },
@@ -204,6 +220,7 @@
 
                 let id = $('#edit_id').val();
                 let name = $('#edit_name').val();
+                let pin = $('#edit_pin').val();
 
                 $.ajax({
                     url: "/data-box/update",
@@ -211,6 +228,7 @@
                     data: {
                         _token: "{{ csrf_token() }}",
                         name: name,
+                        pin: pin,
                         id: id
                     },
 

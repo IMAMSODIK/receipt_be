@@ -6,6 +6,7 @@ use App\Models\Box;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class BoxSeeder extends Seeder
 {
@@ -17,19 +18,22 @@ class BoxSeeder extends Seeder
         Box::create([
             'user_id' => User::first()->id,
             'name' => 'Box Banteko',
-            'status' => 1
+            'status' => 1,
+            'pin' => Hash::make('123456')
         ]);
 
         Box::create([
             'user_id' => User::first()->id,
             'name' => 'Box Temu Cafe',
-            'status' => 1
+            'status' => 1,
+            'pin' => Hash::make('123456')
         ]);
 
         Box::create([
             'user_id' => User::first()->id,
             'name' => 'Box Monochorome',
-            'status' => 0
+            'status' => 0,
+            'pin' => Hash::make('123456')
         ]);
     }
 }

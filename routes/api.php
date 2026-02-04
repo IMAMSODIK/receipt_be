@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\AuthApiController;
+use App\Http\Controllers\BoxController;
 use App\Http\Controllers\MidtransController;
 use App\Models\Transaction;
 
@@ -17,6 +18,8 @@ use App\Models\Transaction;
 */
 
 Route::middleware('auth:sanctum')->post('/payment/snap', [PaymentController::class, 'snap']);
+Route::middleware('auth:sanctum')->post('/box/verify-pin', [BoxController::class, 'verifyPin']);
+
 
 Route::post('/midtrans/webhook', [MidtransController::class, 'handle']);
 Route::get('/transactions/{orderId}/status', function ($orderId) {
