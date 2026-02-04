@@ -17,7 +17,11 @@ class PaymentController extends Controller
         $box = $user->box;
 
         if (!$box) {
-            return response()->json(['message' => 'Box not found'], 404);
+            return response()->json(
+                [
+                    'message' => 'Box not found',
+                    'user' => $user
+                ], 404);
         }
 
         $orderId = 'ORD-' . Str::uuid();
