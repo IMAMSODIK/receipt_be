@@ -17,4 +17,9 @@ class Box extends Model
     public function user(): HasOne{
         return $this->hasOne(User::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

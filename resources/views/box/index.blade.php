@@ -29,56 +29,47 @@
                             Tambah Data
                         </button>
                     </div>
-                    <div class="col-12">
-                        <div class="table-responsive">
-                            <table id="tableKamar" class="table table-bordered table-striped table-hover"
-                                style="width:100%">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th style="width: 60px;">No</th>
-                                        <th>Nama</th>
-                                        <th>Status</th>
-                                        <th style="width: 150px;">Aksi</th>
-                                    </tr>
-                                </thead>
+                    <div class="row g-3">
+                        @foreach ($data as $box)
+                            <div class="col-md-4 col-lg-3">
+                                <div class="card h-100 shadow-sm">
 
-                                <tbody>
-                                    @php $i = 1; @endphp
-                                    @foreach ($data as $box)
-                                        <tr>
-                                            <td class="text-center align-middle">{{ $i++ }}</td>
+                                    <img src="{{ $box->image ? asset('storage/' . $box->image) : asset('own_assets/images/no_image.png') }}"
+                                        class="card-img-top preview-image"
+                                        data-img="{{ $box->image ? asset('storage/' . $box->image) : asset('own_assets/images/no_image.png') }}"
+                                        style="height:200px; object-fit:cover; cursor:pointer;">
 
-                                            <td class="align-middle">{{ $box->name }}</td>
-                                            <td class="align-middle text-center">
-                                                @if ($box->status == 1)
-                                                    <span class="badge bg-success">Aktif</span>
-                                                @else
-                                                    <span class="badge bg-secondary">Tidak Aktif</span>
-                                                @endif
-                                            </td>
 
-                                            <td class="text-center align-middle">
+                                    <div class="card-body text-center">
 
-                                                <div class="d-flex justify-content-center gap-1">
-                                                    <button class="btn btn-sm btn-warning edit"
-                                                        data-id="{{ $box->id }}">Edit</button>
-                                                    <button class="btn btn-sm btn-danger hapus"
-                                                        data-id="{{ $box->id }}">Hapus</button>
-                                                </div>
+                                        <h5 class="card-title mb-2">{{ $box->name }}</h5>
 
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                        @if ($box->status == 1)
+                                            <span class="badge bg-success mb-2">Aktif</span>
+                                        @else
+                                            <span class="badge bg-secondary mb-2">Tidak Aktif</span>
+                                        @endif
+
+                                        <div class="d-flex justify-content-center gap-2 mt-3">
+                                            <button class="btn btn-sm btn-warning edit"
+                                                data-id="{{ $box->id }}">Edit</button>
+
+                                            <button class="btn btn-sm btn-danger hapus"
+                                                data-id="{{ $box->id }}">Hapus</button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="modalTambahKamar" tabindex="-1">
+    <div class="modal fade" id="modalTambahKamar">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -88,17 +79,26 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nama Box</label>
-                        <input type="text" class="form-control" id="name" placeholder="Contoh: 101">
-                    </div>
-                </div>
 
-                <div class="modal-body">
                     <div class="mb-3">
-                        <label for="pin" class="form-label">Pin Box</label>
-                        <input type="text" class="form-control" id="pin" placeholder="Contoh: 101">
+                        <label class="form-label">Gambar Box</label>
+                        <input type="file" class="form-control" id="image">
                     </div>
+
+                    <div class="mb-3">
+                        <img id="preview_edit" width="100%" class="mb-2" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nama Box</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Pin Box</label>
+                        <input type="text" class="form-control" id="pin">
+                    </div>
+
                 </div>
 
                 <div class="modal-footer">
@@ -123,6 +123,11 @@
                     <input type="hidden" id="edit_id">
 
                     <div class="mb-3">
+                        <label class="form-label">Gambar Box</label>
+                        <input type="file" class="form-control" id="edit_image">
+                    </div>
+
+                    <div class="mb-3">
                         <label class="form-label">Nama Box</label>
                         <input type="text" id="edit_name" class="form-control">
                     </div>
@@ -141,6 +146,18 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="imagePreviewModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-transparent border-0">
+
+                <div class="modal-body text-center">
+                    <img id="modalPreviewImg" src="" class="img-fluid rounded shadow">
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('own_script')
@@ -154,40 +171,34 @@
 
             $('#store').on('click', function() {
 
-                let name = $('#name').val();
-                let pin = $('#pin').val();
+                let formData = new FormData();
+
+                formData.append('_token', "{{ csrf_token() }}");
+                formData.append('name', $('#name').val());
+                formData.append('pin', $('#pin').val());
+
+                let file = $('#image')[0].files[0];
+                if (file) {
+                    formData.append('image', file);
+                }
 
                 $.ajax({
                     url: "/data-box/store",
                     type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        name: name,
-                        pin: pin
-                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
 
                     success: function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: response.message,
-                        });
+                        Swal.fire('Berhasil', response.message, 'success');
 
                         $('#modalTambahKamar').modal('hide');
-                        $('#name').val("");
-                        $('#pin').val("");
 
-                        setTimeout(() => {
-                            location.reload();
-                        }, 1000);
+                        setTimeout(() => location.reload(), 1000);
                     },
 
                     error: function(xhr) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal!',
-                            text: xhr.responseJSON?.message ?? 'Terjadi kesalahan',
-                        });
+                        Swal.fire('Gagal', xhr.responseJSON?.message ?? 'Error', 'error');
                     }
                 });
 
@@ -206,7 +217,7 @@
 
                         $('#edit_id').val(res.id);
                         $('#edit_name').val(res.name);
-                        $('#edit_pin').val(res.pin);
+                        $('#preview_edit').attr('src', '/storage/' + res.image);
 
                         $('#modalEditKamar').modal('show');
                     },
@@ -218,19 +229,23 @@
 
             $('#update').on('click', function() {
 
-                let id = $('#edit_id').val();
-                let name = $('#edit_name').val();
-                let pin = $('#edit_pin').val();
+                let formData = new FormData();
+                formData.append('_token', "{{ csrf_token() }}");
+                formData.append('id', $('#edit_id').val());
+                formData.append('name', $('#edit_name').val());
+                formData.append('pin', $('#edit_pin').val());
+
+                let image = $('#edit_image')[0].files[0];
+                if (image) {
+                    formData.append('image', image);
+                }
 
                 $.ajax({
                     url: "/data-box/update",
                     type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        name: name,
-                        pin: pin,
-                        id: id
-                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
 
                     success: function(response) {
                         Swal.fire({
@@ -242,6 +257,7 @@
                         });
 
                         $('#modalEditKamar').modal('hide');
+
                         setTimeout(() => {
                             location.reload();
                         }, 1000);
@@ -251,10 +267,10 @@
                         Swal.fire("Gagal", xhr.responseJSON?.message ?? "Terjadi kesalahan",
                             "error");
                     }
-
                 });
 
             });
+
 
             $(document).on('click', '.hapus', function() {
 
@@ -309,6 +325,13 @@
                     });
 
             });
+        });
+
+        $(document).on('click', '.preview-image', function() {
+            let img = $(this).data('img');
+
+            $('#modalPreviewImg').attr('src', img);
+            $('#imagePreviewModal').modal('show');
         });
     </script>
 @endsection

@@ -12,4 +12,9 @@ class Transaction extends Model
     use HasFactory, HasUlids;
 
     protected $guarded = ['id'];
+
+    public function box()
+    {
+        return $this->belongsTo(Box::class);
+    }
 }

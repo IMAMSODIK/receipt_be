@@ -1,5 +1,20 @@
 @extends('layouts.template')
 
+@section('own_style')
+    <style>
+        .box-transaction {
+            transition: all 0.25s ease;
+            border-radius: 12px;
+        }
+
+        .box-transaction:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            background: #fafafa;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="page-title">
@@ -21,57 +36,144 @@
     </div>
 
     <div class="container-fluid">
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+        
+        <div class="row size-column">
+            <div class="col-xl-4 col-sm-6">
+                <div class="card o-hidden small-widget">
+                    <div class="card-body total-project border-b-primary border-2"><span class="f-light f-w-500 f-14">Total
+                            Transaction</span>
+                        <div class="project-details">
+                            <div class="project-counter">
+                                <h2 class="f-w-600">{{ $totalPaid }}</h2><span class="f-12 f-w-400">(All)</span>
+                            </div>
+                            <div class="product-sub bg-primary-light">
+                                <svg class="invoice-icon">
+                                    <use href="{{ asset('dashboard_assets/assets/svg/icon-sprite.svg#color-swatch') }}">
+                                    </use>
+                                </svg>
+                            </div>
+                        </div>
+                        <ul class="bubbles">
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-sm-6">
+                <div class="card o-hidden small-widget">
+                    <div class="card-body total-project border-b-info border-2"><span class="f-light f-w-500 f-14">Total
+                            Transaction</span>
+                        <div class="project-details">
+                            <div class="project-counter">
+                                <h2 class="f-w-600">{{ $paidThisMonth }}</h2><span class="f-12 f-w-400">(This month)</span>
+                            </div>
+                            <div class="product-sub bg-info-light">
+                                <svg class="invoice-icon">
+                                    <use href="{{ asset('dashboard_assets/assets/svg/icon-sprite.svg#color-swatch') }}">
+                                    </use>
+                                </svg>
+                            </div>
+                        </div>
+                        <ul class="bubbles">
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-sm-6">
+                <div class="card o-hidden small-widget">
+                    <div class="card-body total-project border-b-primary border-2"><span class="f-light f-w-500 f-14">Total
+                            Transaction</span>
+                        <div class="project-details">
+                            <div class="project-counter">
+                                <h2 class="f-w-600">{{ $paidToday }}</h2><span class="f-12 f-w-400">(Today)</span>
+                            </div>
+                            <div class="product-sub bg-primary-light">
+                                <svg class="invoice-icon">
+                                    <use href="{{ asset('dashboard_assets/assets/svg/icon-sprite.svg#color-swatch') }}">
+                                    </use>
+                                </svg>
+                            </div>
+                        </div>
+                        <ul class="bubbles">
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                            <li class="bubble"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row size-column">
             <div class="card">
                 <div class="card-body">
-                    <div class="col-12 mb-3 d-flex justify-content-end">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahKamar">
-                            Tambah Data
-                        </button>
-                    </div>
                     <div class="col-12">
-                        <div class="table-responsive">
-                            <table id="tableKamar" class="table table-bordered table-striped table-hover"
-                                style="width:100%">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th style="width: 60px;">No</th>
-                                        <th>Nama</th>
-                                        <th>Status</th>
-                                        <th style="width: 150px;">Aksi</th>
-                                    </tr>
-                                </thead>
+                        <div class="row">
 
-                                <tbody>
-                                    @php $i = 1; @endphp
-                                    @foreach ($data as $box)
-                                        <tr>
-                                            <td class="text-center align-middle">{{ $i++ }}</td>
+                            @foreach ($boxes as $box)
+                                <div class="col-md-3 mb-4 box-transaction" data-id="{{ $box->id }}"
+                                    style="cursor: pointer">
+                                    <a href="/transaksi/detail?box_id={{ $box->id }}"
+                                        class="text-decoration-none text-dark">
+                                        <div class="card shadow-sm h-100 text-center">
 
-                                            <td class="align-middle">{{ $box->name }}</td>
-                                            <td class="align-middle text-center">
-                                                @if ($box->status == 1)
-                                                    <span class="badge bg-success">Aktif</span>
-                                                @else
-                                                    <span class="badge bg-secondary">Tidak Aktif</span>
-                                                @endif
-                                            </td>
+                                            {{-- Thumbnail default --}}
+                                            <img src="{{ $box->image ? asset('storage/' . $box->image) : asset('own_assets/images/no_image.png') }}"
+                                                class="card-img-top" style="height:200px; object-fit:cover;">
 
-                                            <td class="text-center align-middle">
+                                            <div class="card-body">
 
-                                                <div class="d-flex justify-content-center gap-1">
-                                                    <button class="btn btn-sm btn-warning edit"
-                                                        data-id="{{ $box->id }}">Edit</button>
-                                                    <button class="btn btn-sm btn-danger hapus"
-                                                        data-id="{{ $box->id }}">Hapus</button>
+                                                <h5 class="card-title mb-2">
+                                                    {{ $box->name }}
+                                                </h5>
+
+                                                <div class="text-success fw-bold fs-5">
+                                                    Rp {{ number_format($box->total_amount ?? 0, 0, ',', '.') }}
                                                 </div>
 
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                <small class="text-muted">
+                                                    Total Pendapatan
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+
                         </div>
+
                     </div>
                 </div>
             </div>

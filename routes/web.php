@@ -21,7 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/data-box/delete', [BoxController::class, 'delete']);
 
     Route::get('/transaksi', [TransactionController::class, 'index']);
-    // Route::get('/transaksi/edit', [BoxController::class, 'edit']);
+    Route::get('/transaksi/detail', [TransactionController::class, 'detail']);
     // Route::post('/transaksi/store', [BoxController::class, 'store']);
     // Route::post('/transaksi/update', [BoxController::class, 'update']);
     // Route::post('/transaksi/delete', [BoxController::class, 'delete']);

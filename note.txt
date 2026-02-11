@@ -2,3 +2,26 @@ box
 - id
 - nama
 - status
+
+
+tiap box memiliki id
+
+statistik page transaksi
+total transaksi (all)
+total transaksi (thismonth)
+total transaksi (to day)
+
+transaksi box yang status paid
+    no
+    nama box
+    amount
+
+statistik page transaksi
+total transaksi (all)
+total transaksi (thismonth)
+total transaksi (to day)
+
+detail box transaksi
+    no
+    hari
+    amount
