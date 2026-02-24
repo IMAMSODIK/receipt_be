@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RECEIPT PHOTOBOX — neo brutalism provider</title>
+    <title>NOON SNAP | RECEIPT PHOTOBOX</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -418,7 +418,7 @@
         <!-- header -->
         <div class="header-brutal">
             <div class="logo">
-                <h1>📸 RECEIPT<br>PHOTOBOX</h1>
+                <h1><img src="{{asset('landing_assets/images/logo.png')}}" alt=""> RECEIPT<br>PHOTOBOX</h1>
                 <span>PROVIDER INDONESIA #1</span>
             </div>
             <div class="badge-year">
