@@ -25,3 +25,14 @@ detail box transaksi
     no
     hari
     amount
+
+
+
+
+box
+    tambah tipe box
+    harga perfiti
+
+table tipe_box
+    id
+    nama_tipe
