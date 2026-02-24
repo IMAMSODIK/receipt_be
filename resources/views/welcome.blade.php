@@ -418,11 +418,11 @@
         <!-- header -->
         <div class="header-brutal">
             <div class="logo">
-                <h1><img src="{{asset('landing_assets/images/logo.png')}}" alt=""> RECEIPT<br>PHOTOBOX</h1>
-                <span>PROVIDER INDONESIA #1</span>
+                <h1><img src="{{asset('landing_assets/images/logo.png')}}" width="100px" alt=""> RECEIPT<br>PHOTOBOX</h1>
+                <span>Best Youth Partner!</span>
             </div>
             <div class="badge-year">
-                <i class="fas fa-bolt"></i> EST 2022
+                <i class="fas fa-bolt"></i> EST 2025
             </div>
         </div>
 
@@ -484,7 +484,7 @@
             <!-- service 2: beli unit full -->
             <div class="service-item">
                 <h3><i class="fas fa-cart-shopping"></i> FULL UNIT</h3>
-                <div class="service-price">Rp28,5J</div>
+                <div class="service-price">Rp6,5J</div>
                 <ul class="service-feature">
                     <li><i class="fas fa-check"></i> 1 unit photobox</li>
                     <li><i class="fas fa-check"></i> Instalasi & training</li>
@@ -503,7 +503,7 @@
             <div class="purchase-left">
                 <h2>MAU JADI OWNER? 🔥</h2>
                 <div class="full-price-brutal">
-                    Rp 28.500.000
+                    Rp 6.500.000
                 </div>
                 <p style="font-size: 1.8rem; font-weight: 700; background: black; color: white; padding: 10px; border: 4px solid #fe5f57; display: inline-block;">include mesin + kertas + instalasi</p>
             </div>
@@ -517,9 +517,9 @@
         <!-- company profile: tentang provider -->
         <div class="profile-brutal">
             <div class="profile-text">
-                <h3><i class="fas fa-building"></i> PT. RECEIPT PHOTOBOX NUSANTARA</h3>
+                <h3><i class="fas fa-building"></i><img src="{{asset('landing_assets/images/logo.png')}}" width="100px" alt=""> </h3>
                 <p style="font-size: 1.5rem; font-weight: 500; line-height: 1.4; background: white; border: 4px solid black; padding: 20px; box-shadow: 8px 8px 0 black;">
-                    Sejak 2022 kami menjadi <strong>satu-satunya provider resmi</strong> mesin Receipt Photobox di Indonesia. Sudah memasok 40+ unit ke berbagai kota (Jakarta, Bandung, Surabaya, Bali, Medan). Melayani pembelian perorangan, corporate, dan rental booth untuk event skala nasional.
+                    Sejak 2025 kami menjadi <strong>satu-satunya provider resmi</strong> mesin Receipt Photobox di Indonesia. Sudah memasok 40+ unit ke berbagai kota (Jakarta, Bandung, Surabaya, Bali, Medan). Melayani pembelian perorangan, corporate, dan rental booth untuk event skala nasional.
                 </p>
                 <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
                     <span style="background: black; color: white; padding: 10px 20px; border: 4px solid #fe5f57; font-size: 1.5rem;"><i class="fas fa-store"></i> 40+ UNIT TERPASANG</span>
@@ -536,18 +536,17 @@
 
         <!-- kontak / footer neo brutal -->
         <div class="footer-brutal">
-            <i class="fas fa-map-pin"></i> JL. PHOTOBOX RAYA NO. 69, JAKTIM &nbsp;&nbsp; 
-            <i class="fas fa-phone"></i> 0811-2233-4455 &nbsp;&nbsp;
-            <i class="fas fa-envelope"></i> SALES@RECEIPTPHOTOBOX.ID
+            <i class="fas fa-map-pin"></i> JL. Bunga Wijaya Kesuma, Pasar III, Medan &nbsp;&nbsp; 
+            <i class="fas fa-phone"></i> 0821-4539-7049 &nbsp;&nbsp;
             <div style="margin-top: 20px; font-size: 1.2rem;">
-                <i class="fab fa-tiktok"></i> @receiptphotobox &nbsp;&nbsp; <i class="fab fa-instagram"></i> @receiptphotobox.id
+                <i class="fab fa-tiktok"></i> @n00n_snap &nbsp;&nbsp; <i class="fab fa-instagram"></i> @n00n_snap
             </div>
         </div>
 
         <!-- kecil2 tagline genz -->
-        <div style="background: black; color: #fe5f57; text-align: center; padding: 10px; border-top: 6px solid #fe5f57; font-weight: 800; font-size: 1.3rem;">
+        {{-- <div style="background: black; color: #fe5f57; text-align: center; padding: 10px; border-top: 6px solid #fe5f57; font-weight: 800; font-size: 1.3rem;">
             <i class="fas fa-crown"></i> NEO BRUTALISM PROVIDER — FOR GEN Z, BY THE REAL OGs <i class="fas fa-crown"></i>
-        </div>
+        </div> --}}
     </div>
 </body>
 </html>
